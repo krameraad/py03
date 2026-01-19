@@ -144,8 +144,9 @@ def inventory_stats(players: dict):
         for item, info in players[player].items():
             if info.get("rarity") == "rare":
                 rares += [item]
-    print(f"{H}=== Inventory Analytics ==={X}\n")
-    print(f"{HC}Most valuable player{X}\t: {most_gold[0]} ({most_gold[1]} gold)")
+    print(f"{H}=== Inventory Analytics ==={X}")
+    print(f"{HC}Most valuable player{X}\t:"
+          f" {most_gold[0]} ({most_gold[1]} gold)")
     print(f"{HC}Most items{X}\t\t: {most_items[0]} ({most_items[1]} items)")
     print(f"{HC}Rarest items{X}\t\t: {", ".join(rares)}")
 

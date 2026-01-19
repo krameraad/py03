@@ -71,14 +71,6 @@ def get_item_count(inventory: dict) -> int:
     return count
 
 
-def get_rare_count(inventory: dict) -> int:
-    count = 0
-    for item, info in inventory.items():
-        if info.get("rarity") == "rare":
-            count += 1
-    return count
-
-
 def print_inventory(name: str, inventory: dict):
     """Print info on a player's inventory."""
     categories = {}
@@ -139,22 +131,23 @@ def give_item(from_name: str,
 
 
 def inventory_stats(players: dict):
-    stats = {
-        "most_gold": -1,
-        "most_gold_name": "",
-        "most_items": -1,
-        "most_items_name": "",
-        "rares": ""
-    }
+    most_gold = ("", -1)
+    most_items = ("", -1)
+    rares = []
     for player in players:
         total_value = get_total_value(players[player])
-        if total_value > stats["most_gold"]:
-            stats["most_gold"] = total_value
-            stats["most_gold_name"] = player
+        if total_value > most_gold[1]:
+            most_gold = (player, total_value)
         item_count = get_item_count(players[player])
-        if item_count > stats["most_items"]:
-            stats["most_items"] = item_count
-            stats["most_items_name"] = player
+        if item_count > most_items[1]:
+            most_items = (player, item_count)
+        for item, info in players[player].items():
+            if info.get("rarity") == "rare":
+                rares += [item]
+    print(f"{H}=== Inventory Analytics ==={X}\n")
+    print(f"{HC}Most valuable player\t:{X} {most_gold[0]} ({most_gold[1]} gold)")
+    print(f"{HC}Most items\t\t:{X} {most_items[0]} ({most_items[1]} items)")
+    print(f"{HC}Rarest items\t\t:{X} {rares}")
 
 
 print(f"{H}=== Player Inventory System ==={X}\n")

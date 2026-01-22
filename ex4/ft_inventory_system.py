@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
 
 X = "\033[0m"
-R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
-C = "\033[96m"
-M = "\033[95m"
-Y = "\033[93m"
-HY = "\033[1;93m"
 D = "\033[2m"
 H = "\033[1m"
 HC = "\033[1;96m"
-XH = "\033[0;1m"
-E = "\033[3m"
+HY = "\033[1;93m"
 
 
 alice = {
@@ -118,7 +110,7 @@ def give_item(from_name: str,
     else:
         to_inv.update({item: dict(trade_item)})
         to_inv[item]["quantity"] = count
-    print(f"{G}Transaction successful!{X}")
+    print(f"{D}Transaction successful!{X}")
 
     print(f"{H}=== Updated inventories ==={X}")
     if from_inv.get("potion"):
@@ -131,6 +123,7 @@ def give_item(from_name: str,
 
 
 def inventory_stats(players: dict):
+    """Print statistics on all players' inventories."""
     most_gold = ("", -1)
     most_items = ("", -1)
     rares = []

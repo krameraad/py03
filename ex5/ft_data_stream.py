@@ -1,18 +1,13 @@
 #!/usr/bin/env python3
 
+from typing import List, Dict
+
 X = "\033[0m"
-R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
-C = "\033[96m"
-M = "\033[95m"
-Y = "\033[93m"
-HY = "\033[1;93m"
 D = "\033[2m"
 H = "\033[1m"
 HC = "\033[1;96m"
+HY = "\033[1;93m"
 XH = "\033[0;1m"
-E = "\033[3m"
 
 
 events = [
@@ -56,27 +51,49 @@ events = [
     {
         'id': 7, 'player': 'diana', 'event_type': 'login', 'timestamp': '2024-01-12T11:38', 'data': {'level': 17, 'score_delta': -56, 'zone': 'pixel_zone_4'}}, {'id': 8, 'player': 'eve', 'event_type': 'login', 'timestamp': '2024-01-30T12:05', 'data': {'level': 36, 'score_delta': 200, 'zone': 'pixel_zone_5'}}, {'id': 9, 'player': 'charlie', 'event_type': 'level_up', 'timestamp': '2024-01-07T22:04', 'data': {'level': 3, 'score_delta': 133, 'zone': 'pixel_zone_3'}}, {'id': 10, 'player': 'alice', 'event_type': 'logout', 'timestamp': '2024-01-28T03:24', 'data': {'level': 18, 'score_delta': 364, 'zone': 'pixel_zone_3'}}, {'id': 11, 'player': 'bob', 'event_type': 'kill', 'timestamp': '2024-01-12T06:42', 'data': {'level': 18, 'score_delta': -27, 'zone': 'pixel_zone_5'}}, {'id': 12, 'player': 'frank', 'event_type': 'logout', 'timestamp': '2024-01-18T23:15', 'data': {'level': 11, 'score_delta': 373, 'zone': 'pixel_zone_4'}}, {'id': 13, 'player': 'charlie', 'event_type': 'item_found', 'timestamp': '2024-01-23T17:14', 'data': {'level': 44, 'score_delta': 232, 'zone': 'pixel_zone_1'}}, {'id': 14, 'player': 'bob', 'event_type': 'login', 'timestamp': '2024-01-26T10:25', 'data': {'level': 18, 'score_delta': -33, 'zone': 'pixel_zone_2'}}, {'id': 15, 'player': 'eve', 'event_type': 'item_found', 'timestamp': '2024-01-11T06:41', 'data': {'level': 32, 'score_delta': 305, 'zone': 'pixel_zone_4'}}, {'id': 16, 'player': 'bob', 'event_type': 'kill', 'timestamp': '2024-01-05T07:47', 'data': {'level': 36, 'score_delta': 451, 'zone': 'pixel_zone_3'}}, {'id': 17, 'player': 'frank', 'event_type': 'level_up', 'timestamp': '2024-01-14T18:25', 'data': {'level': 24, 'score_delta': 124, 'zone': 'pixel_zone_2'}}, {'id': 18, 'player': 'eve', 'event_type': 'death', 'timestamp': '2024-01-03T01:55', 'data': {'level': 8, 'score_delta': 56, 'zone': 'pixel_zone_2'}}, {'id': 19, 'player': 'frank', 'event_type': 'death', 'timestamp': '2024-01-20T02:24', 'data': {'level': 25, 'score_delta': 379, 'zone': 'pixel_zone_5'}}, {'id': 20, 'player': 'charlie', 'event_type': 'level_up', 'timestamp': '2024-01-28T00:43', 'data': {'level': 47, 'score_delta': 17, 'zone': 'pixel_zone_5'}}, {'id': 21, 'player': 'charlie', 'event_type': 'item_found', 'timestamp': '2024-01-11T03:18', 'data': {'level': 28, 'score_delta': 61, 'zone': 'pixel_zone_4'}}, {'id': 22, 'player': 'alice', 'event_type': 'item_found', 'timestamp': '2024-01-29T23:16', 'data': {'level': 33, 'score_delta': 82, 'zone': 'pixel_zone_5'}}, {'id': 23, 'player': 'alice', 'event_type': 'item_found', 'timestamp': '2024-01-10T20:32', 'data': {'level': 39, 'score_delta': 103, 'zone': 'pixel_zone_2'}}, {'id': 24, 'player': 'charlie', 'event_type': 'logout', 'timestamp': '2024-01-18T16:58', 'data': {'level': 1, 'score_delta': 231, 'zone': 'pixel_zone_4'}}, {'id': 25, 'player': 'alice', 'event_type': 'login', 'timestamp': '2024-01-30T11:56', 'data': {'level': 20, 'score_delta': 145, 'zone': 'pixel_zone_1'}}, {'id': 26, 'player': 'bob', 'event_type': 'level_up', 'timestamp': '2024-01-03T02:46', 'data': {'level': 32, 'score_delta': -30, 'zone': 'pixel_zone_5'}}, {'id': 27, 'player': 'bob', 'event_type': 'logout', 'timestamp': '2024-01-22T15:35', 'data': {'level': 11, 'score_delta': 171, 'zone': 'pixel_zone_5'}}, {'id': 28, 'player': 'eve', 'event_type': 'death', 'timestamp': '2024-01-07T17:48', 'data': {'level': 47, 'score_delta': 105, 'zone': 'pixel_zone_3'}}, {'id': 29, 'player': 'diana', 'event_type': 'item_found', 'timestamp': '2024-01-21T11:28', 'data': {'level': 34, 'score_delta': 362, 'zone': 'pixel_zone_1'}}, {'id': 30, 'player': 'bob', 'event_type': 'logout', 'timestamp': '2024-01-03T10:01', 'data': {'level': 38, 'score_delta': 467, 'zone': 'pixel_zone_2'}}, {'id': 31, 'player': 'eve', 'event_type': 'logout', 'timestamp': '2024-01-01T02:45', 'data': {'level': 41, 'score_delta': -40, 'zone': 'pixel_zone_2'}}, {'id': 32, 'player': 'alice', 'event_type': 'login', 'timestamp': '2024-01-28T10:04', 'data': {'level': 33, 'score_delta': 143, 'zone': 'pixel_zone_3'}}, {'id': 33, 'player': 'frank', 'event_type': 'death', 'timestamp': '2024-01-07T17:08', 'data': {'level': 47, 'score_delta': 484, 'zone': 'pixel_zone_5'}}, {'id': 34, 'player': 'diana', 'event_type': 'logout', 'timestamp': '2024-01-26T15:51', 'data': {'level': 27, 'score_delta': 94, 'zone': 'pixel_zone_1'}}, {'id': 35, 'player': 'alice', 'event_type': 'item_found', 'timestamp': '2024-01-14T11:27', 'data': {'level': 27, 'score_delta': 378, 'zone': 'pixel_zone_1'}}, {'id': 36, 'player': 'frank', 'event_type': 'item_found', 'timestamp': '2024-01-21T03:03', 'data': {'level': 26, 'score_delta': 247, 'zone': 'pixel_zone_1'}}, {'id': 37, 'player': 'bob', 'event_type': 'logout', 'timestamp': '2024-01-07T17:28', 'data': {'level': 9, 'score_delta': 332, 'zone': 'pixel_zone_2'}}, {'id': 38, 'player': 'charlie', 'event_type': 'death', 'timestamp': '2024-01-08T02:28', 'data': {'level': 36, 'score_delta': 0, 'zone': 'pixel_zone_1'}}, {'id': 39, 'player': 'frank', 'event_type': 'level_up', 'timestamp': '2024-01-27T00:05', 'data': {'level': 49, 'score_delta': 142, 'zone': 'pixel_zone_2'}}, {'id': 40, 'player': 'diana', 'event_type': 'death', 'timestamp': '2024-01-16T06:55', 'data': {'level': 26, 'score_delta': -40, 'zone': 'pixel_zone_2'}}, {'id': 41, 'player': 'diana', 'event_type': 'login', 'timestamp': '2024-01-13T08:59', 'data': {'level': 30, 'score_delta': 192, 'zone': 'pixel_zone_4'}}, {'id': 42, 'player': 'frank', 'event_type': 'item_found', 'timestamp': '2024-01-26T17:42', 'data': {'level': 46, 'score_delta': 398, 'zone': 'pixel_zone_2'}}, {'id': 43, 'player': 'bob', 'event_type': 'kill', 'timestamp': '2024-01-07T01:37', 'data': {'level': 48, 'score_delta': 455, 'zone': 'pixel_zone_1'}}, {'id': 44, 'player': 'frank', 'event_type': 'kill', 'timestamp': '2024-01-02T01:37', 'data': {'level': 31, 'score_delta': 414, 'zone': 'pixel_zone_5'}}, {'id': 45, 'player': 'bob', 'event_type': 'login', 'timestamp': '2024-01-17T02:54', 'data': {'level': 12, 'score_delta': -30, 'zone': 'pixel_zone_5'}}, {'id': 46, 'player': 'alice', 'event_type': 'item_found', 'timestamp': '2024-01-28T07:25', 'data': {'level': 8, 'score_delta': 483, 'zone': 'pixel_zone_2'}}, {'id': 47, 'player': 'eve', 'event_type': 'level_up', 'timestamp': '2024-01-02T19:05', 'data': {'level': 27, 'score_delta': 497, 'zone': 'pixel_zone_5'}}, {'id': 48, 'player': 'eve', 'event_type': 'kill', 'timestamp': '2024-01-30T08:13', 'data': {'level': 43, 'score_delta': 221, 'zone': 'pixel_zone_2'}}, {'id': 49, 'player': 'charlie', 'event_type': 'death', 'timestamp': '2024-01-05T21:41', 'data': {'level': 20, 'score_delta': 368, 'zone': 'pixel_zone_3'}}, {'id': 50, 'player': 'alice', 'event_type': 'login', 'timestamp': '2024-01-15T19:36', 'data': {'level': 7, 'score_delta': -25, 'zone': 'pixel_zone_5'}}]  # noqa: E501
 
+total_events = 0
+high_level = 0
+treasure_events = 0
+level_up_events = 0
 
-def stream_processor(events: list):
+
+def stream_processor(events: List[Dict]):
+    """
+    Process a series of game events provided as a list of dictionaries.
+
+    Yields the event as a string, plus some extra information.
+    """
     print(f"{D}Processing {len(events)} game events...{X}")
     for event in events:
-        print(f"Event {event.get("id")}:"
-              f" Player {event.get("player").capitalize()}"
-              f" (level {event.get("data").get("level")}) ", end="")
+        id = event.get("id")
+        player = event.get("player").capitalize()
+        level = event.get("data").get("level")
+        treasure = False
+        level_up = False
+
+        result = f"{D}Event {id: >3}:" \
+                 f" Player {X}{HC}{player: <12}{X}" \
+                 f"\tlevel {HY}{level: >3}{X}\t"
         match event.get("event_type"):
             case "login":
-                print("logged in")
+                result += "logged in"
             case "level_up":
-                print("leveled up")
+                result += "leveled up"
+                level_up = True
             case "death":
-                print("died")
+                result += "died"
             case "kill":
-                print("killed a monster")
+                result += "killed a monster"
             case "logout":
-                print("logged out")
+                result += "logged out"
             case "item_found":
-                print("found an item")
-    print()
+                result += "found an item"
+                treasure = True
+
+        # Yield the string representing the event,
+        # whether the level was 10 or above,
+        # and whether the event was a treasure or leveling event.
+        yield (result, level >= 10, treasure, level_up)
 
 
 def fibonacci():
@@ -98,21 +115,31 @@ def primes():
         yield n
 
 
-print(f"{H}=== Game Data Stream Processor ==={X}\n")
+print(f"{H}\n=== Game Data Stream Processor ==={X}")
+for event in stream_processor(events):
+    print(event[0])
+    total_events += 1
+    if event[1]:
+        high_level += 1
+    if event[2]:
+        treasure_events += 1
+    if event[3]:
+        level_up_events += 1
 
-stream_processor(events)
+print(f"{H}\n=== Stream Analytics ==={X}")
+print(f"{HC}Total events processed{X}\t: {total_events}")
+print(f"{HC}High-level players (10+){X}: {high_level}")
+print(f"{HC}Treasure events{X}\t\t: {treasure_events}")
+print(f"{HC}Level-up events{X}\t\t: {level_up_events}")
+print(f"{HC}Memory usage{X}\t\t: Constant (streaming)")
 
-print(f"{H}=== Stream Analytics ==={X}\n")
-
-print(f"{H}=== Generator Demonstration ==={X}\n")
-
+print(f"{H}\n=== Generator Demonstration ==={X}")
 limit = 10
 gen = fibonacci()
 print(f"Fibonacci sequence (first {limit}): {next(gen)}", end="")
 for i in range(1, limit):
     print(", " + str(next(gen)), end="")
 print()
-
 limit = 5
 gen = primes()
 print(f"Prime numbers (first {limit}): {next(gen)}", end="")

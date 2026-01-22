@@ -5,14 +5,9 @@ import math
 
 X = "\033[0m"
 R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
-C = "\033[96m"
-M = "\033[95m"
-Y = "\033[93m"
 D = "\033[2m"
 H = "\033[1m"
-E = "\033[3m"
+HC = "\033[1;96m"
 
 
 def dist3(a: tuple, b: tuple) -> float:
@@ -26,18 +21,18 @@ def dist3(a: tuple, b: tuple) -> float:
     return math.sqrt(sum)
 
 
-print(f"{H}=== Game Coordinate System ==={X}\n")
+print(f"{H}\n=== Game Coordinate System ==={X}")
 try:
     pos = tuple(sys.argv[1].split(','))
     origin = (0, 0, 0)
-    print("Position created:", pos)
-    print(f"{G}Distance between (0, 0, 0) and {pos}: {dist3(origin, pos)}{X}")
+    print(f"{HC}Position created{X}:", pos)
+    print(f"{HC}Distance between (0, 0, 0) and {pos}{X}: {dist3(origin, pos)}")
     print(f"{D}\nUnpacking demonstration:{X}")
     a, b, c = pos
-    print(f"Player at: x={a}, y={b}, z={c}")
+    print(f"{HC}Player at{X}: x={a}, y={b}, z={c}")
 except ValueError as e:
     print(f"{R}Error parsing coordinates: {str(e)}{X}")
-    print(f"{E}\n- Usage: ft_coordinate_system.py x,y,z{X}")
+    print(f"{D}\n- Usage: ft_coordinate_system.py x,y,z{X}")
 except IndexError:
     print(f"{R}Error: no arguments provided{X}")
-    print(f"{E}\n- Usage: ft_coordinate_system.py x,y,z{X}")
+    print(f"{D}\n- Usage: ft_coordinate_system.py x,y,z{X}")

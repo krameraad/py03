@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
 
 X = "\033[0m"
-R = "\033[91m"
-G = "\033[92m"
-B = "\033[94m"
 C = "\033[96m"
-M = "\033[95m"
 Y = "\033[93m"
-D = "\033[2m"
 H = "\033[1m"
 HC = "\033[1;96m"
 XH = "\033[0;1m"
-E = "\033[3m"
 
 alice = set(["first_kill",
              "level_10",
@@ -26,15 +20,15 @@ charlie = set(["level_10",
                "boss_slayer",
                "speed_demon",
                "perfectionist"])
-print(f"{H}=== Achievement Tracker System ==={X}\n")
+print(f"{H}\n=== Achievement Tracker System ==={X}")
 print(f"{HC}Alice{XH}'s achievements:{X}")
 print(alice, "\n")
 print(f"{HC}Bob{XH}'s achievements:{X}")
 print(bob, "\n")
 print(f"{HC}Charlie{XH}'s achievements:{X}")
-print(charlie, "\n")
+print(charlie)
 
-print(f"{H}=== Achievement Analytics ==={X}\n")
+print(f"{H}\n=== Achievement Analytics ==={X}")
 print(f"{H}All unique achievements:{X}")
 all = alice.union(bob, charlie)
 print(all)

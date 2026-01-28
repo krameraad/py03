@@ -46,7 +46,7 @@ data = {
         },
         "frank": {
             "level": 15,
-            "total_score": 8359,
+            "total_score": 359,
             "sessions_played": 85,
             "favorite_mode": "competitive",
             "achievements_count": 1
@@ -77,36 +77,43 @@ print(f"{H}\n=== Game Analytics Dashboard ==={X}")
 
 print(f"{H}\n=== List Comprehension Examples ==={X}")
 
-high_scorers = [player for player in data["players"]
-                if data["players"][player]["total_score"] > 2000]
+players = data["players"]
+
+high_scorers = [player for player in players
+                if players[player]["total_score"] > 2000]
 print(f"{HC}High scorers (>2000){X}\t: {high_scorers}")
 
 scores_doubled = [player["total_score"] * 2
-                  for player in data["players"].values()]
+                  for player in players.values()]
 print(f"{HC}Scores doubled{X}\t\t: {scores_doubled}")
 
-active_players = [player for player in data["players"]]
+active_players = [player for player in players]
 print(f"{HC}Active players{X}\t\t: {active_players}")
 
 
 print(f"{H}\n=== Dict Comprehension Examples ==={X}")
 
-player_scores = {player: data["players"][player]["total_score"]
-                 for player in data["players"]}
+player_scores = {player: players[player]["total_score"]
+                 for player in players}
 print(f"{HC}Player scores{X}\t\t: {player_scores}")
 
-score_categories = {category: data["players"][category]["total_score"]
-                    for category in data["players"]}
+med_scorer_len = len([player["total_score"] for player in players
+                      if 1000 < players[player]["total_score"] <= 2000])
+
+low_scorer_len = len([player["total_score"] for player in players
+                      if players[player]["total_score"] <= 1000])
+
+score_categories = {}
 print(f"{HC}Score categories{X}\t: {score_categories}")
 
-achievement_counts = {player: data["players"][player]["achievements_count"]
-                      for player in data["players"]}
+achievement_counts = {player: players[player]["achievements_count"]
+                      for player in players}
 print(f"{HC}Achievement counts{X}\t: {achievement_counts}")
 
 
 print(f"{H}\n=== Set Comprehension Examples ==={X}")
 
-unique_players = {player for player in data["players"]}
+unique_players = {player for player in players}
 print(f"{HC}Unique players{X}\t\t: {unique_players}")
 
 unique_achievements = {achievement for achievement in data["achievements"]}

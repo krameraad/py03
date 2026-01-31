@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from typing import List, Dict
-
 X = "\033[0m"
 D = "\033[2m"
 H = "\033[1m"
@@ -57,7 +55,7 @@ treasure_events = 0
 level_up_events = 0
 
 
-def stream_processor(events: List[Dict]):
+def stream_processor(events: list[dict]):
     """
     Process a series of game events provided as a list of dictionaries.
 
@@ -72,7 +70,7 @@ def stream_processor(events: List[Dict]):
         level_up = False
 
         result = f"{D}Event {id: >3}:" \
-                 f" Player {X}{HC}{player: <12}{X}" \
+                 f" {X}Player {HC}{player: <12}{X}" \
                  f"\tlevel {HY}{level: >3}{X}\t"
         match event.get("event_type"):
             case "login":
@@ -90,9 +88,6 @@ def stream_processor(events: List[Dict]):
                 result += "found an item"
                 treasure = True
 
-        # Yield the string representing the event,
-        # whether the level was 10 or above,
-        # and whether the event was a treasure or leveling event.
         yield (result, level >= 10, treasure, level_up)
 
 
@@ -140,6 +135,7 @@ print(f"Fibonacci sequence (first {limit}): {next(gen)}", end="")
 for i in range(1, limit):
     print(", " + str(next(gen)), end="")
 print()
+
 limit = 5
 gen = primes()
 print(f"Prime numbers (first {limit}): {next(gen)}", end="")

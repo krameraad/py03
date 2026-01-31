@@ -97,13 +97,16 @@ player_scores = {player: players[player]["total_score"]
                  for player in players}
 print(f"{HC}Player scores{X}\t\t: {player_scores}")
 
-med_scorer_len = len([player["total_score"] for player in players
-                      if 1000 < players[player]["total_score"] <= 2000])
-
-low_scorer_len = len([player["total_score"] for player in players
-                      if players[player]["total_score"] <= 1000])
-
-score_categories = {}
+score_categories = {"high": 0, "medium": 0, "low": 0}
+score_categories["high"] = {"high": score_categories["high"] + 1
+                            for player in data["players"].values()
+                            if player["total_score"] > 3000}
+score_categories["medium"] = {"medium": score_categories["medium"] + 1
+                              for player in data["players"].values()
+                              if 1000 < player["total_score"] <= 3000}
+score_categories["low"] = {"low": score_categories["low"] + 1
+                           for player in data["players"].values()
+                           if player["total_score"] <= 1000}
 print(f"{HC}Score categories{X}\t: {score_categories}")
 
 achievement_counts = {player: players[player]["achievements_count"]
@@ -126,7 +129,12 @@ print(f"{HC}Active regions{X}\t\t: {active_regions}")
 
 print(f"{H}\n=== Combined Analysis ==={X}")
 print(f"{HC}Total players{X}\t\t\t: {len(active_players)}")
-print(f"{HC}Total unique achievements{X}\t: {1}")
+print(f"{HC}Total unique achievements{X}\t: {len(unique_achievements)}")
 print(f"{HC}Average score{X}\t\t\t: "
       f"{sum(scores_doubled) / len(scores_doubled) / 2:.1f}")
-print(f"{HC}Top performer{X}\t\t\t: {1}")
+
+top_performer = ("", -1)
+for player in players:
+    if players[player]["total_score"] > top_performer[1]:
+        top_performer = (player, players[player]["total_score"])
+print(f"{HC}Top performer{X}\t\t\t: {top_performer[0]}")

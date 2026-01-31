@@ -20,6 +20,8 @@ charlie = set(["level_10",
                "boss_slayer",
                "speed_demon",
                "perfectionist"])
+
+
 print(f"{H}\n=== Achievement Tracker System ==={X}")
 print(f"{HC}Alice{XH}'s achievements:{X}")
 print(alice, "\n")
@@ -30,18 +32,27 @@ print(charlie)
 
 print(f"{H}\n=== Achievement Analytics ==={X}")
 print(f"{H}All unique achievements:{X}")
-all = alice.union(bob, charlie)
+all = alice | bob | charlie
+# all = alice.union(bob, charlie)
 print(all)
 print(f"{H}Total unique achievements: {Y}{len(all)}{X}\n")
 
-print(f"{H}Common to all players:{X} {alice.intersection(bob, charlie)}")
-alice_dif = alice.difference(bob, charlie)
-bob_dif = bob.difference(alice, charlie)
-charlie_dif = charlie.difference(alice, bob)
+print(f"{H}Common to all players:{X} {alice & bob & charlie}")
+# print(f"{H}Common to all players:{X} {alice.intersection(bob, charlie)}")
+alice_dif = alice - bob - charlie
+bob_dif = bob - alice - charlie
+charlie_dif = charlie - alice - bob
+# alice_dif = alice.difference(bob, charlie)
+# bob_dif = bob.difference(alice, charlie)
+# charlie_dif = charlie.difference(alice, bob)
 print(f"{H}Rare achievements (1 player):{X}"
-      f" {alice_dif.union(bob_dif, charlie_dif)}\n")
+      f" {alice_dif | bob_dif | charlie_dif}\n")
+# print(f"{H}Rare achievements (1 player):{X}"
+#       f" {alice_dif.union(bob_dif, charlie_dif)}\n")
 
 print(f"{HC}Alice{XH} vs {C}Bob{XH} common:{X} "
-      f"{alice.intersection(bob)}")
-print(f"{H}- {C}Alice{XH} unique:{X} {alice.difference(bob)}")
-print(f"{H}- {C}Bob{XH} unique:{X} {bob.difference(alice)}")
+      f"{alice & bob}")
+print(f"{H}- {C}Alice{XH} unique:{X} {alice - bob}")
+print(f"{H}- {C}Bob{XH} unique:{X} {bob - alice}")
+# print(f"{H}- {C}Alice{XH} unique:{X} {alice.difference(bob)}")
+# print(f"{H}- {C}Bob{XH} unique:{X} {bob.difference(alice)}")

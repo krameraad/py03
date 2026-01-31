@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 X = "\033[0m"
+R = "\033[91m"
+G = "\033[92m"
 D = "\033[2m"
 H = "\033[1m"
 HC = "\033[1;96m"
@@ -49,21 +51,21 @@ players = {
 }
 
 
-def get_total_value(inventory: dict) -> int:
+def get_total_value(inventory: dict[str, dict]) -> int:
     total_value = 0
-    for item, info in inventory.items():
-        total_value += info.get("quantity") * info.get("value")
+    for v in inventory.values():
+        total_value += v.get("quantity") * v.get("value")
     return total_value
 
 
-def get_item_count(inventory: dict) -> int:
+def get_item_count(inventory: dict[str, dict]) -> int:
     count = 0
-    for item, info in inventory.items():
-        count += info.get("quantity")
+    for v in inventory.values():
+        count += v.get("quantity")
     return count
 
 
-def print_inventory(name: str, inventory: dict):
+def print_inventory(name: str, inventory: dict[str, dict]):
     """Print info on a player's inventory."""
     categories = {}
 
@@ -91,14 +93,18 @@ def print_inventory(name: str, inventory: dict):
 
 def give_item(from_name: str,
               to_name: str,
-              from_inv: dict,
-              to_inv: dict,
+              from_inv: dict[str, dict],
+              to_inv: dict[str, dict],
               item: str,
               count: int):
     """Give up to `count` of `item` from `from_name` to `to_name`."""
-    trade_item: dict = from_inv["potion"]
+    print(f"{H}=== {from_name} tries to give {to_name} {count} {item}s ==={X}")
 
-    print(f"{H}=== {from_name} gives {to_name} {count} {item}s ==={X}")
+    trade_item = from_inv.get("potion")
+    if not trade_item or trade_item["quantity"] < 1:
+        print(f"{R}Transaction failed!{X}")
+        return
+
     if count > trade_item["quantity"]:
         count = trade_item["quantity"]
     trade_item["quantity"] -= count
@@ -110,7 +116,7 @@ def give_item(from_name: str,
     else:
         to_inv.update({item: dict(trade_item)})
         to_inv[item]["quantity"] = count
-    print(f"{D}Transaction successful!{X}")
+    print(f"{G}Transaction successful!{X}")
 
     print(f"{H}=== Updated inventories ==={X}")
     if from_inv.get("potion"):
@@ -127,16 +133,21 @@ def inventory_stats(players: dict):
     most_gold = ("", -1)
     most_items = ("", -1)
     rares = []
+
     for player in players:
+
         total_value = get_total_value(players[player])
         if total_value > most_gold[1]:
             most_gold = (player, total_value)
+
         item_count = get_item_count(players[player])
         if item_count > most_items[1]:
             most_items = (player, item_count)
+
         for item, info in players[player].items():
             if info.get("rarity") == "rare":
                 rares += [item]
+
     print(f"{H}=== Inventory Analytics ==={X}")
     print(f"{HC}Most valuable player{X}\t:"
           f" {most_gold[0]} ({most_gold[1]} gold)")

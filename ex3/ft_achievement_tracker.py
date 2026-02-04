@@ -7,19 +7,19 @@ H = "\033[1m"
 HC = "\033[1;96m"
 XH = "\033[0;1m"
 
-alice = set(["first_kill",
-             "level_10",
-             "treasure_hunter",
-             "speed_demon"])
-bob = set(["first_kill",
-           "level_10",
+alice = {"first_kill",
+         "level_10",
+         "treasure_hunter",
+         "speed_demon"}
+bob = {"first_kill",
+       "level_10",
+       "boss_slayer",
+       "collector"}
+charlie = {"level_10",
+           "treasure_hunter",
            "boss_slayer",
-           "collector"])
-charlie = set(["level_10",
-               "treasure_hunter",
-               "boss_slayer",
-               "speed_demon",
-               "perfectionist"])
+           "speed_demon",
+           "perfectionist"}
 
 
 print(f"{H}\n=== Achievement Tracker System ==={X}")
@@ -31,10 +31,9 @@ print(f"{HC}Charlie{XH}'s achievements:{X}")
 print(charlie)
 
 print(f"{H}\n=== Achievement Analytics ==={X}")
-print(f"{H}All unique achievements:{X}")
 all = alice | bob | charlie
 # all = alice.union(bob, charlie)
-print(all)
+print(f"{H}All unique achievements:{X} {all}")
 print(f"{H}Total unique achievements: {Y}{len(all)}{X}\n")
 
 print(f"{H}Common to all players:{X} {alice & bob & charlie}")

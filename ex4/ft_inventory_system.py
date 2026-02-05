@@ -100,7 +100,7 @@ def give_item(from_name: str,
     """Give up to `count` of `item` from `from_name` to `to_name`."""
     print(f"{H}=== {from_name} tries to give {to_name} {count} {item}s ==={X}")
 
-    trade_item = from_inv.get("potion")
+    trade_item = from_inv.get(item)
     if not trade_item or trade_item["quantity"] < 1:
         print(f"{R}Transaction failed!{X}")
         return
@@ -109,7 +109,7 @@ def give_item(from_name: str,
         count = trade_item["quantity"]
     trade_item["quantity"] -= count
     if trade_item["quantity"] < 1:
-        from_inv.pop("potion")
+        from_inv.pop(item)
 
     if item in to_inv.keys():
         to_inv[item] += count
@@ -119,13 +119,13 @@ def give_item(from_name: str,
     print(f"{G}Transaction successful!{X}")
 
     print(f"{H}=== Updated inventories ==={X}")
-    if from_inv.get("potion"):
+    if from_inv.get(item):
         print(f"{HC}{from_name}'s {item}s{X}"
-              f"\t: {from_inv.get("potion").get("quantity")}")
+              f"\t: {from_inv.get(item).get("quantity")}")
     else:
         print(f"{HC}{from_name}'s {item}s{X}\t: 0")
     print(f"{HC}{to_name}'s {item}s{X}"
-          f"\t: {to_inv.get("potion").get("quantity")}\n")
+          f"\t: {to_inv.get(item).get("quantity")}\n")
 
 
 def inventory_stats(players: dict):
